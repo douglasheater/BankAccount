@@ -1,0 +1,380 @@
+package courseProjectPhase1;
+
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class BankAcctApp {
+
+	public static void main(String[] args) 
+	{
+		Scanner input = new Scanner(System.in);
+		Scanner scanner = new Scanner(System.in);
+		
+		
+		ArrayList<Customer> customers = new ArrayList<Customer>();
+		for(int i = 0; i < 2; i++)
+		{
+				
+				System.out.print("Enter Customer ID (non-blank, 5 chars max): ");
+				String ID = input.nextLine();
+				while(true) 
+				{
+					try {
+						if(ID.length() == 0 || !DataEntry.checkMaxStringLen(ID, 5))
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer ID must be non-blank and 5 chars max");
+						System.out.print("Enter Customer ID (non-blank, 5 chars max): ");
+						ID = input.nextLine();
+					}
+				}
+	
+				System.out.print("Enter Customer SSN (non-blank, must be 9 numbers): ");
+				String SSN = input.nextLine();
+				while(true)
+				{
+					try {
+						if(SSN.length() != 9 || !DataEntry.checkStringNumeric(SSN))
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer SSN must be non-blank and be 9 numbers");
+						System.out.print("Enter Customer SSN (non-blank, must be 9 numbers): ");
+						SSN = input.nextLine();
+					}
+				}
+
+				
+				System.out.print("Enter Customer Last Name (non-blank, 20 chars max): ");
+				String lastName = input.nextLine();
+				while(true)
+				{
+					try {
+						if(lastName.length() == 0 || !DataEntry.checkMaxStringLen(lastName, 20))
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer Last Name must be non-blank and 20 chars max");
+						System.out.print("Enter Customer Last Name (non-blank, 20 chars max): ");
+						lastName = input.nextLine();
+					}
+				}
+
+				
+				System.out.print("Enter Customer First Name (non-blank, 15 chars max): ");
+				String firstName = input.nextLine();
+				while(true)
+				{
+					try {
+						if(firstName.length() == 0 || !DataEntry.checkMaxStringLen(firstName, 15))
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer First Name must be non-blank and 15 chars max");
+						System.out.print("Enter Customer First Name (non-blank, 15 chars max): ");
+						firstName = input.nextLine();
+					}
+				}
+
+				
+				System.out.print("Enter Customer Street Address (non-blank, 20 chars max): ");
+				String street = input.nextLine();
+				while(true)
+				{
+					try {
+						if(street.length() == 0 || !DataEntry.checkMaxStringLen(street, 20))
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer Street Address must be non-blank and 20 chars max");
+						System.out.print("Enter Customer Street Address (non-blank, 20 chars max): ");
+						street = input.nextLine();
+					}
+				}
+
+				
+				System.out.print("Enter Customer City (non-blank, 20 chars max): ");
+				String city = input.nextLine();
+				while(true)
+				{
+					try {
+						if(city.length() == 0 || !DataEntry.checkMaxStringLen(city, 20))
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer City must be non-blank and 20 chars max");
+						System.out.print("Enter Customer City (non-blank, 20 chars max): ");
+						city = input.nextLine();
+					}
+				}
+
+				
+				System.out.print("Enter Customer State (non-blank, must be 2 chars): ");
+				String state = input.nextLine();
+				while(true)
+				{
+					try {
+						if(state.length() != 2)
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer State must be non-blank and be 2 chars");
+						System.out.print("Enter Customer State (non-blank, must be 2 chars): ");
+						state = input.nextLine();
+					}
+				}
+
+				
+				System.out.print("Enter Customer Zip Code (non-blank, must be 5 numbers): ");
+				String zip = input.nextLine();
+				while(true)
+				{
+					try {
+						if(zip.length() != 5 || !DataEntry.checkStringNumeric(zip))
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer Zip Code must be non-blank and be 5 numbers");
+						System.out.print("Enter Customer Zip Code (non-blank, must be 5 numbers): ");
+						zip = input.nextLine();
+					}
+				}
+
+				
+				System.out.print("Enter Customer Phone Number (non-blank, must be 10 numbers): ");
+				String phone = input.nextLine();
+				while(true)
+				{
+					try {
+						if(phone.length() != 10 || !DataEntry.checkStringNumeric(phone))
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer Phone Number must be non-blank and be 10 numbers");
+						System.out.print("Enter Customer Phone Number (non-blank, must be 10 numbers): ");
+						phone = input.nextLine();
+					}
+				}
+
+				
+				System.out.print("Enter Account Number (must be 5 chars): ");
+				String number = input.nextLine();
+				while(true)
+				{
+					try {
+						if(number.length() != 5)
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer Account Number must be non-blank and must be 5 chars");
+						System.out.print("Enter Customer Account Number (non-blank, must be 5 chars): ");
+						number = input.nextLine();
+					}
+				}
+				
+				System.out.print("Enter Account Type (CHK or SAV only): ");
+				String type = input.nextLine();
+				while(true)
+				{
+					System.out.print(type);
+					try {
+						if(!type.equals("CHK") && !type.equals("SAV"))
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer Account Type must be CHK or SAV");
+						System.out.print("Enter Customer Account Type (CHK or SAV only): ");
+						type = input.nextLine();
+					}
+				}
+				
+				System.out.print("Enter Service Fee ($0.00 to $10.00): ");
+				double fee = scanner.nextInt();
+				while(true)
+				{
+					try {
+						if(fee < 0 || fee > 10)
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer Service Fee must be non-blank and between $0.00 and $10.00");
+						System.out.print("Enter Customer Service Fee ($0.00 to $10.00): ");
+						fee = scanner.nextInt();
+					}
+				}
+				
+				System.out.print("Enter Interest Rate (0.00% to 10.00%): ");
+				double rate = scanner.nextInt();
+				while(true)
+				{
+					try {
+						if(rate < 0 || rate > 10)
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer Interest Rate must be non-blank and be 0.00% and 10.00%");
+						System.out.print("Enter Customer Interest Rate (0.00% to 10.00%): ");
+						rate = scanner.nextInt();
+					}
+				}
+				
+				System.out.print("Enter Overdraft Fee: ");
+				double overdraft = scanner.nextInt();
+				while(true)
+				{
+					try {
+						if(overdraft == 0)
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer Overdraft Fee must be numeric");
+						System.out.print("Enter Customer Overdraft Fee: ");
+						overdraft = scanner.nextInt();
+					}
+				}
+				
+				System.out.print("Enter Current Balance: ");
+				double balance = scanner.nextInt();
+				while(true)
+				{
+					try {
+						if(balance == 0)
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer Account Balance must be numeric");
+						System.out.print("Enter Customer Current Balance: ");
+						balance = scanner.nextInt();
+					}
+				}
+				
+				Account account = new Account(number, type, fee, rate, overdraft, balance);
+				customers.add(new Customer(ID, SSN, lastName, firstName, street, city, state, zip, phone, account));
+				
+			
+		}
+		
+		input.close();
+		scanner.close();
+		
+		int count = 1;
+		for(Customer c : customers)
+		{
+			System.out.println("Customer" + count + " data: ");
+			System.out.println(c.toString());
+			System.out.println("Account" + count + " data: ");
+			System.out.println(c.customerAccount.toString());
+			count++;
+			
+		}
+		
+		
+	}
+
+}
