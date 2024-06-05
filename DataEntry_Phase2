@@ -1,0 +1,30 @@
+package courseProjectPhase1;
+
+
+
+public class DataEntry 
+{
+	public static boolean checkMaxStringLen(String customerID, int maxLength)
+	{
+		boolean valid = true;
+		if(customerID.length() > maxLength)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
+	public static boolean checkStringNumeric(String customerSSN)
+	{
+		for(int i = 0; i < customerSSN.length(); i++)
+		{
+			if(!Character.isDigit(customerSSN.charAt(i)))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
