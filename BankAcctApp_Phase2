@@ -247,7 +247,6 @@ public class BankAcctApp {
 				String type = input.nextLine();
 				while(true)
 				{
-					System.out.print(type);
 					try {
 						if(!type.equals("CHK") && !type.equals("SAV"))
 						{
