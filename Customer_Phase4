@@ -1,0 +1,87 @@
+package courseProjectPhase1;
+
+public class Customer 
+{
+	private String customerID;
+	private String customerSSN;
+	private String customerLastName;
+	private String customerFirstName;
+	private String customerStreet;
+	private String customerCity;
+	private String customerState;
+	private String customerZip;
+	private String customerPhone;
+	Account customerAccount;
+	
+	public Customer(String ID, String SSN, String lastName, String firstName, String street, String city, String state, String zip, String phone, Account account)
+	{
+		customerID = ID;
+		customerSSN = SSN;
+		customerLastName = lastName;
+		customerFirstName = firstName;
+		customerStreet = street;
+		customerCity = city;
+		customerState = state;
+		customerZip = zip;
+		customerPhone = phone;
+		customerAccount = account;
+	}
+	
+	public Customer()
+	{
+		
+	}
+	
+	
+	public String toString()
+	{
+		
+		return "Customer ID: " + customerID + "\nCustomer SSN: " + customerSSN + "\nCustomer Last Name: " + customerLastName + "\nCustomer First Name: " + customerFirstName + "\nCustomer Street: " + customerStreet + "\nCustomer City: " + customerCity + "\nCustomer State: " + customerState + "\nCustomer Zip: " + customerZip + "\nCustomer Phone: " + customerPhone;
+	}
+	
+	
+	public String getCustomerID()
+	{
+		return customerID;
+	}
+	
+	public String getCustomerSSN()
+	{
+		return customerSSN;
+	}
+	
+	public String getCustomerLastName()
+	{
+		return customerLastName;
+	}
+	
+	public String getCustomerFirstName()
+	{
+		return customerFirstName;
+	}
+	
+	public String getCustomerStreet()
+	{
+		return customerStreet;
+	}
+	
+	public String getCustomerCity()
+	{
+		return customerCity;
+	}
+	
+	public String getCustomerState()
+	{
+		return customerState;
+	}
+	
+	public String getCustomerZip()
+	{
+		return customerZip;
+	}
+	
+	public String getCustomerPhone()
+	{
+		return customerPhone;
+	}
+}
