@@ -1,0 +1,652 @@
+package courseProjectPhase1;
+
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+
+public class BankAcctApp extends JFrame {
+	
+	public BankAcctApp() 
+	{
+		super("Bank Account Application");
+		Customer customer = new Customer();
+		Customer[] customers = new Customer[1];
+		customers[0] = customer;
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setSize(1000, 1000);
+		FlowLayout manager = new FlowLayout();
+		setLayout(manager);
+		JOptionPane title = new JOptionPane();
+		title.setMessage("Welcome to the Bank Account Application.");
+		add(title);
+		JLabel jpID = new JLabel("Customer ID");
+		JTextField jtfID = new JTextField();
+		JLabel jpSSN = new JLabel("Customer SSN");
+		JTextField jtfSSN = new JTextField();
+		JLabel jpFirstName = new JLabel("Customer First Name");
+		JTextField jtfFirstName = new JTextField();
+		JLabel jpLastName = new JLabel("Customer Last Name");
+		JTextField jtfLastName = new JTextField();
+		JLabel jpStreet = new JLabel("Customer Street");
+		JTextField jtfStreet = new JTextField();
+		JLabel jpCity = new JLabel("Customer City");
+		JTextField jtfCity = new JTextField();
+		String[] states = {"(choose state)", "VA","MD","NC","SC","GA"};
+		JLabel jpState = new JLabel("Customer State");
+		JComboBox<String>stateBox = new JComboBox<String>(states);
+		JLabel jpZip = new JLabel("Customer Zip Code");
+		JTextField jtfZip = new JTextField();
+		JLabel jpPhone = new JLabel("Customer Phone Number");
+		JTextField jtfPhone = new JTextField();
+		JLabel jpNumber = new JLabel("Customer Account Number");
+		JTextField jtfNumber = new JTextField();
+		JLabel jpType = new JLabel("Customer Account Type");
+		ButtonGroup group = new ButtonGroup();
+		JRadioButton checking = new JRadioButton("Checking");
+		JRadioButton savings = new JRadioButton("Savings");
+		group.add(checking);
+		group.add(savings);
+		JLabel jpDate = new JLabel("Date of transaction");
+		JTextField jtfDate = new JTextField();
+		JLabel jpAmount = new JLabel("Transaction amount");
+		JTextField jtfAmount = new JTextField();
+		JLabel jpTransactionType = new JLabel("Transaction type");
+		ButtonGroup group1 = new ButtonGroup();
+		JRadioButton deposit = new JRadioButton("Deposit");
+		JRadioButton withdrawal = new JRadioButton("Withdrawal");
+		group1.add(deposit);
+		group1.add(withdrawal);
+		JButton btnAdd = new JButton("Add New Customer and Account");
+		btnAdd.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				String ID = jtfID.getText();
+				String SSN = jtfSSN.getText();
+				String firstName = jtfFirstName.getText();
+				String lastName = jtfLastName.getText();
+				String street = jtfStreet.getText();
+				String city = jtfCity.getText();
+				String zip = jtfZip.getText();
+				String phone = jtfPhone.getText();
+				String number = jtfNumber.getText();
+				String state = stateBox.getSelectedItem().toString();
+				boolean accountChecking = checking.isSelected();
+				boolean accountSavings = savings.isSelected();
+				if(accountChecking)
+				{
+					CheckingAccount checkingAccount = new CheckingAccount(number, 0);
+					checkingAccount.accountType = "CHK";
+					customers[0] = new Customer(ID, SSN, firstName, lastName, street, city, state, zip, phone, checkingAccount);
+				}
+				if(accountSavings)
+				{
+					SavingsAccount savingsAccount = new SavingsAccount(number, 0);
+					savingsAccount.accountType = "SAV";
+					customers[0] = new Customer(ID, SSN, firstName, lastName, street, city, state, zip, phone, savingsAccount);
+				}
+				
+			}
+			
+				
+			
+		});
+		JButton btnDisplay = new JButton("Display Customer and Account Data");
+		btnDisplay.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{	
+				title.setMessage("Customer data: \n" + customers[0].toString() + "\n" + customers[0].customerAccount.toString());
+			}	
+		});
+		JButton btnTransaction = new JButton("Perform Transaction");
+		btnTransaction.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				String date = jtfDate.getText();
+				double amount = Double.parseDouble(jtfAmount.getText());
+				boolean transactionDeposit = deposit.isSelected();
+				boolean transactionWithdrawal = withdrawal.isSelected();
+				if(transactionDeposit)
+				{
+					customers[0].customerAccount.setTransactionDate(date);
+					customers[0].customerAccount.setTransactionAmount(amount);
+					customers[0].customerAccount.setTransactionType("DEP");
+					customers[0].customerAccount.deposit(amount);
+					title.setMessage("Transaction data: \nCustomer ID: " + customers[0].getCustomerID() + 
+							"\nAccount Number: " + customers[0].customerAccount.getAccountNumber() + 
+							"\nAccount Type: " + customers[0].customerAccount.getAccountType() + 
+							"\nTransaction Date: " + customers[0].customerAccount.getTransactionDate() + 
+							"\nTransaction Type: " + customers[0].customerAccount.getTransactionType() + 
+							"\nTransaction Amount: " + customers[0].customerAccount.getTransactionAmount() + 
+							"\nBalance: " + customers[0].customerAccount.getBalance());
+				}
+				if(transactionWithdrawal)
+				{
+					if(customers[0].customerAccount.getBalance() < amount + customers[0].customerAccount.serviceFee && customers[0].customerAccount.accountType.equals("SAV"))
+					{
+						title.setMessage("error");
+						
+					}
+					else 
+					{
+						customers[0].customerAccount.setTransactionDate(date);
+						customers[0].customerAccount.setTransactionAmount(amount);
+						customers[0].customerAccount.setTransactionType("WTH");
+						customers[0].customerAccount.withdrawal(amount);
+						title.setMessage("Transaction data: \nCustomer ID: " + customers[0].getCustomerID() + 
+								"\nAccount Number: " + customers[0].customerAccount.getAccountNumber() + 
+								"\nAccount Type: " + customers[0].customerAccount.getAccountType() + 
+								"\nTransaction Date: " + customers[0].customerAccount.getTransactionDate() + 
+								"\nTransaction Type: " + customers[0].customerAccount.getTransactionType() + 
+								"\nTransaction Amount: " + customers[0].customerAccount.getTransactionAmount() + 
+								"\nBalance: " + customers[0].customerAccount.getBalance());
+					}
+				}
+				
+//				title.setMessage("Transaction data: \nCustomer ID: " + customers[0].getCustomerID() + 
+//						"\nAccount Number: " + customers[0].customerAccount.getAccountNumber() + 
+//						"\nAccount Type: " + customers[0].customerAccount.getAccountType() + 
+//						"\nTransaction Date: " + customers[0].customerAccount.getTransactionDate() + 
+//						"\nTransaction Type: " + customers[0].customerAccount.getTransactionType() + 
+//						"\nTransaction Amount: " + customers[0].customerAccount.getTransactionAmount() + 
+//						"\nBalance: " + customers[0].customerAccount.getBalance());
+			}
+		});
+
+		
+		JButton btnClear = new JButton("Clear");
+		btnClear.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				jtfID.setText("");
+				jtfSSN.setText("");
+				jtfFirstName.setText("");
+				jtfLastName.setText("");
+				jtfStreet.setText("");
+				jtfCity.setText("");
+				jtfZip.setText("");
+				jtfPhone.setText("");
+				jtfNumber.setText("");
+				stateBox.setSelectedIndex(0);
+				group.clearSelection();
+				
+			}
+		});
+		
+		
+		JPanel jpAccount = new JPanel();
+		jpAccount.add(checking); 
+		jpAccount.add(savings);
+		
+		JPanel jpForm = new JPanel();
+		jpForm.setLayout(new GridLayout(25, 4, 10, 5));
+		jpForm.add(jpID);
+		jpForm.add(jtfID);
+		jpForm.add(jpSSN);
+		jpForm.add(jtfSSN);
+		jpForm.add(jpFirstName);
+		jpForm.add(jtfFirstName);
+		jpForm.add(jpLastName);
+		jpForm.add(jtfLastName);
+		jpForm.add(jpStreet);
+		jpForm.add(jtfStreet);
+		jpForm.add(jpCity);
+		jpForm.add(jtfCity);
+		jpForm.add(jpState);
+		jpForm.add(stateBox);
+		jpForm.add(jpZip);
+		jpForm.add(jtfZip);
+		jpForm.add(jpPhone);
+		jpForm.add(jtfPhone);
+		jpForm.add(jpNumber);
+		jpForm.add(jtfNumber);
+		jpForm.add(jpType);
+		jpForm.add(jpAccount);
+		jpForm.add(btnAdd);
+		jpForm.add(btnDisplay);
+		jpForm.add(btnClear);
+		jpForm.add(btnTransaction);
+		jpForm.add(jpDate);
+		jpForm.add(jtfDate);
+		jpForm.add(jpAmount);
+		jpForm.add(jtfAmount);
+		jpForm.add(jpTransactionType);
+		JPanel jpTransaction = new JPanel();
+		jpTransaction.add(deposit); 
+		jpTransaction.add(withdrawal);
+		jpForm.add(jpTransaction);
+		
+		
+		JPanel jpMainPanel = new JPanel();
+		jpMainPanel.setLayout(new BorderLayout(10, 10));
+		jpMainPanel.add(jpForm, BorderLayout.NORTH);
+		jpMainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		add(jpMainPanel);
+		
+		
+		
+		
+		setVisible(true);
+	}
+
+	public static void main(String[] args)
+	{
+		BankAcctApp gui = new BankAcctApp();
+		
+		Scanner input = new Scanner(System.in);
+		Scanner scanner = new Scanner(System.in);
+		
+		
+		ArrayList<Customer> customers = new ArrayList<Customer>();
+		for(int i = 0; i < 2; i++)
+		{
+				
+				System.out.print("Enter Customer ID (non-blank, 5 chars max): ");
+				String ID = input.nextLine();
+				while(true) 
+				{
+					try {
+						if(ID.length() == 0 || !DataEntry.checkMaxStringLen(ID, 5))
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer ID must be non-blank and 5 chars max");
+						System.out.print("Enter Customer ID (non-blank, 5 chars max): ");
+						ID = input.nextLine();
+					}
+				}
+	
+				System.out.print("Enter Customer SSN (non-blank, must be 9 numbers): ");
+				String SSN = input.nextLine();
+				while(true)
+				{
+					try {
+						if(SSN.length() != 9 || !DataEntry.checkStringNumeric(SSN))
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer SSN must be non-blank and be 9 numbers");
+						System.out.print("Enter Customer SSN (non-blank, must be 9 numbers): ");
+						SSN = input.nextLine();
+					}
+				}
+
+				
+				System.out.print("Enter Customer Last Name (non-blank, 20 chars max): ");
+				String lastName = input.nextLine();
+				while(true)
+				{
+					try {
+						if(lastName.length() == 0 || !DataEntry.checkMaxStringLen(lastName, 20))
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer Last Name must be non-blank and 20 chars max");
+						System.out.print("Enter Customer Last Name (non-blank, 20 chars max): ");
+						lastName = input.nextLine();
+					}
+				}
+
+				
+				System.out.print("Enter Customer First Name (non-blank, 15 chars max): ");
+				String firstName = input.nextLine();
+				while(true)
+				{
+					try {
+						if(firstName.length() == 0 || !DataEntry.checkMaxStringLen(firstName, 15))
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer First Name must be non-blank and 15 chars max");
+						System.out.print("Enter Customer First Name (non-blank, 15 chars max): ");
+						firstName = input.nextLine();
+					}
+				}
+
+				
+				System.out.print("Enter Customer Street Address (non-blank, 20 chars max): ");
+				String street = input.nextLine();
+				while(true)
+				{
+					try {
+						if(street.length() == 0 || !DataEntry.checkMaxStringLen(street, 20))
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer Street Address must be non-blank and 20 chars max");
+						System.out.print("Enter Customer Street Address (non-blank, 20 chars max): ");
+						street = input.nextLine();
+					}
+				}
+
+				
+				System.out.print("Enter Customer City (non-blank, 20 chars max): ");
+				String city = input.nextLine();
+				while(true)
+				{
+					try {
+						if(city.length() == 0 || !DataEntry.checkMaxStringLen(city, 20))
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer City must be non-blank and 20 chars max");
+						System.out.print("Enter Customer City (non-blank, 20 chars max): ");
+						city = input.nextLine();
+					}
+				}
+
+				
+				System.out.print("Enter Customer State (non-blank, must be 2 chars): ");
+				String state = input.nextLine();
+				while(true)
+				{
+					try {
+						if(state.length() != 2)
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer State must be non-blank and be 2 chars");
+						System.out.print("Enter Customer State (non-blank, must be 2 chars): ");
+						state = input.nextLine();
+					}
+				}
+
+				
+				System.out.print("Enter Customer Zip Code (non-blank, must be 5 numbers): ");
+				String zip = input.nextLine();
+				while(true)
+				{
+					try {
+						if(zip.length() != 5 || !DataEntry.checkStringNumeric(zip))
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer Zip Code must be non-blank and be 5 numbers");
+						System.out.print("Enter Customer Zip Code (non-blank, must be 5 numbers): ");
+						zip = input.nextLine();
+					}
+				}
+
+				
+				System.out.print("Enter Customer Phone Number (non-blank, must be 10 numbers): ");
+				String phone = input.nextLine();
+				while(true)
+				{
+					try {
+						if(phone.length() != 10 || !DataEntry.checkStringNumeric(phone))
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer Phone Number must be non-blank and be 10 numbers");
+						System.out.print("Enter Customer Phone Number (non-blank, must be 10 numbers): ");
+						phone = input.nextLine();
+					}
+				}
+
+				
+				System.out.print("Enter Account Number (must be 5 chars): ");
+				String number = input.nextLine();
+				while(true)
+				{
+					try {
+						if(number.length() != 5)
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer Account Number must be non-blank and must be 5 chars");
+						System.out.print("Enter Customer Account Number (non-blank, must be 5 chars): ");
+						number = input.nextLine();
+					}
+				}
+				
+				System.out.print("Enter Account Type (CHK or SAV only): ");
+				String type = input.nextLine();
+				while(true)
+				{
+					try {
+						if(!type.equals("CHK") && !type.equals("SAV"))
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer Account Type must be CHK or SAV");
+						System.out.print("Enter Customer Account Type (CHK or SAV only): ");
+						type = input.nextLine();
+					}
+				}
+				
+
+				
+				System.out.print("Enter Current Balance: ");
+				double balance = scanner.nextInt();
+				while(true)
+				{
+					try {
+						if(balance == 0)
+						{
+							throw new Exception();
+						}
+						else
+						{
+							break;
+						}
+					
+					}
+					catch(Exception e) {
+						System.out.println("Error: Customer Account Balance must be numeric");
+						System.out.print("Enter Customer Current Balance: ");
+						balance = scanner.nextInt();
+					}
+				}
+				
+				
+				
+				
+				Account account = new SavingsAccount(number, balance);
+				
+				if(type.equals("CHK"))
+				{
+					account = new CheckingAccount(number, balance);
+				}
+				else if(type.equals("SAV"))
+				{
+					account = new SavingsAccount(number, balance);
+				}
+				
+				Customer customer = new Customer(ID, SSN, lastName, firstName, street, city, state, zip, phone, account);
+				
+				
+				for(int k = 0; k < 4; k++)
+				{
+					System.out.print("Enter Transaction Date: ");
+					String date = input.nextLine();
+					while(true)
+					{
+						try {
+							if(!date.equals("1"))
+							{
+								throw new Exception();
+							}
+							else
+							{
+								break;
+							}
+					
+					}
+					catch(Exception e) {
+							System.out.println("Error: Transaction Date must a valid date");
+							System.out.print("Enter Transaction Date: ");
+							date = input.nextLine();
+						}
+					}
+					
+					System.out.print("Enter Transaction Type (DEP or WTH only): ");
+					String transaction = input.nextLine();
+					while(true)
+					{
+						try {
+							if(!transaction.equals("WTH") && !transaction.equals("DEP"))
+							{
+								throw new Exception();
+							}
+							else
+							{
+								break;
+							}
+					
+					}
+					catch(Exception e) {
+							System.out.println("Error: Transaction Type must be DEP or WTH");
+							System.out.print("Enter Transaction Type (DEP or WTH only): ");
+							transaction = input.nextLine();
+						}
+					}
+					
+					System.out.print("Enter Transaction Amount: ");
+					double amount = scanner.nextInt();
+					while(true)
+					{
+						try {
+							if(amount == 0)
+							{
+								throw new Exception();
+							}
+							else
+							{
+								break;
+							}
+						
+						}
+						catch(Exception e) {
+							System.out.println("Error: Transaction Amount must be numeric");
+							System.out.print("Enter Transaction Amount: ");
+							amount = scanner.nextInt();
+						}
+					}
+					
+					if(transaction.equals("WTH"))
+					{
+						
+						customer.customerAccount.withdrawal(amount);
+						System.out.println("Account Balance: " + customer.customerAccount.getBalance());
+						
+					}
+					else if(transaction.equals("DEP"))
+					{
+						customer.customerAccount.deposit(amount);
+						System.out.println("Account Balance: " + customer.customerAccount.getBalance());
+					}
+				}
+				
+				customer.customerAccount.accountBalance = customer.customerAccount.accountBalance + (customer.customerAccount.accountBalance * (customer.customerAccount.interestRate/100));
+				System.out.println("Account Balance after interest: " + customer.customerAccount.getBalance());	
+				customers.add(customer);
+				
+				
+			
+		}
+		
+		input.close();
+		scanner.close();
+		
+		int count = 1;
+		for(Customer c : customers)
+		{
+			System.out.println("Customer" + count + " data: ");
+			System.out.println(c.toString());
+			System.out.println("Account" + count + " data: ");
+			System.out.println(c.customerAccount.toString());
+			count++;
+			
+		}
+		
+		
+	}
+
+}
