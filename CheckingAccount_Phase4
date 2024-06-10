@@ -1,0 +1,67 @@
+package courseProjectPhase1;
+
+public class CheckingAccount extends Account {
+	
+	String transactionDate;
+	String transactionType;
+	double transactionAmount;
+
+	public CheckingAccount(String number, double balance) 
+	{
+		super(number, "CHK", 0.5, 2, 30, balance);
+		
+	}
+	
+	@Override
+	void withdrawal(double x)
+	{
+		double balance = this.getBalance() - x - this.serviceFee;
+		if(balance < 0)
+		{
+			this.accountBalance = balance - 30;
+		}
+		else
+		{
+			this.accountBalance = balance;
+		}
+	}
+	
+	@Override
+	void deposit(double y)
+	{
+		double balance = this.getBalance() + y - this.serviceFee;
+		this.accountBalance = balance;
+	}
+	
+	public String getTransactionDate()
+	{
+		return transactionDate;
+	}
+	
+	public double getTransactionAmount()
+	{
+		return transactionAmount;
+	}
+	
+	public String getTransactionType()
+	{
+		return transactionType;
+	}
+	
+	public void setTransactionDate(String date)
+	{
+		transactionDate = date;
+	}
+	
+	public void setTransactionAmount(double amount)
+	{
+		transactionAmount = amount;
+	}
+	
+	public void setTransactionType(String type)
+	{
+		transactionType = type;
+	}
+	
+	
+}
