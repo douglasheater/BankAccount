@@ -1,0 +1,57 @@
+package courseProjectPhase1;
+
+public abstract class Account 
+{
+	private String accountNumber;
+	String accountType;
+	double serviceFee;
+	double interestRate;
+	private double overdraftFee;
+	double accountBalance = 0;
+	
+	public Account(String number, String type, double fee, double rate, double overdraft, double balance)
+	{
+		accountNumber = number;
+		accountType = type;
+		serviceFee = fee;
+		interestRate = rate;
+		overdraftFee = overdraft;
+		accountBalance = balance;
+	}
+	
+	public String toString()
+	{
+		
+		return "Account Number: " + accountNumber + "\nAccount Type: " + accountType + "\nAccount Service Fee: " + serviceFee + "\nAccount Interest Rate: " + interestRate + "\nAccount Overdraft Fee: " + overdraftFee + "\nAccount Balance: " + accountBalance;
+	}
+	
+	abstract void withdrawal(double x);
+	
+	
+	abstract void deposit(double y);
+	
+	
+	public double getBalance()
+	{
+		return accountBalance;
+	}
+	
+	public String getAccountNumber()
+	{
+		return accountNumber;
+	}
+	
+	public String getAccountType()
+	{
+		return accountType;
+	}
+	
+	abstract public String getTransactionDate();
+	abstract public double getTransactionAmount();
+	abstract public String getTransactionType();
+	abstract public void setTransactionDate(String date);
+	abstract public void setTransactionAmount(double amount);
+	abstract public void setTransactionType(String type);
+	
+
+}
